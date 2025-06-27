@@ -1,0 +1,84 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #001e4d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* App Container */
+.app {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+/* Heading */
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Question */
+.quiz h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+/* Answer Buttons */
+#answer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid black;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.btn:hover:not([disabled]) {
+  background-color: #2196f3;
+  color: white;
+}
+.btn:disabled{
+    cursor: no-drop;
+}
+#next-btn{
+    background: #001e4d;
+    color: #ffff;
+    border: 0;
+    font-weight: 500;
+    padding: 10px;
+    width: 150px;
+    cursor: pointer;
+    margin: 20px;
+    border-radius: 4px;
+}
+.correct{
+    background: rgb(107, 243, 107);
+}
+.incorrect{
+    background: rgb(248, 91, 91);
+}

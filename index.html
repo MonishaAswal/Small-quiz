@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="style.css"/>
+        <title>Quiz App</title>
+    </head>
+    <body>
+        <div class="app">
+            <h1>Simple Quiz</h1>
+            <div class="quiz">
+                <h2 id="questions">Questions are here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+            
+
+        </div>
+        <script>
+            const ques = [
+            {
+               question : "Which data structure uses FIFO (First In First Out)?",
+               answers : [
+               {text : "Stack", correct : false},
+               {text : "Queue", correct : true},
+               {text : "Tree", correct : false},
+               {text : "Graph", correct : false}
+               ]
+            },
+             {
+               question : "Which sorting algorithm is the fastest in the average case?",
+               answers : [
+               {text : "Bubble Sort", correct : false},
+               {text : "Insertion Sort", correct : false},
+               {text : "Merge Sort", correct : false},
+               {text : "Quick Sort", correct : true}
+               ]
+            },
+             {
+               question : "Which of the following is a linear data structure?",
+               answers : [
+               {text : "Graph", correct : false},
+               {text : "Tree", correct : false},
+               {text : "Stack", correct : true},
+               {text : "Hash table", correct : false}
+               ]
+            },
+             {
+               question : "Which data structure is used in recursion?",
+               answers : [
+               {text : "Stack", correct : true},
+               {text : "Heap", correct : false},
+               {text : "Queue", correct : false},
+               {text : "Array", correct : false}
+               ]
+            },
+             {
+               question : "What is the time complexity of linear search in the worst case?",
+               answers : [
+               {text : "O(1)", correct : false},
+               {text : "O(log n)", correct : false},
+               {text : "O(n²)", correct : false},
+               {text : "O(n)", correct : true}
+               ]
+            }
+        ];
+        const questionElement = document.getElementById("questions")
+        const answerButtons = document.getElementById("answer-buttons")
+        const nextButton = document.getElementById("next-btn")
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        function startQuiz(){
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.innerHTML = "Next";
+            showQuestions();
+        }
+        function showQuestions(){
+            resetState();
+            let currentQuestion = ques[currentQuestionIndex];
+            let questionNo = currentQuestionIndex + 1;
+            questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement("button");
+                button.innerHTML = answer.text;
+                button.classList.add("btn");
+                answerButtons.appendChild(button);
+                if(answer.correct){
+                    button.dataset.correct = answer.correct;
+                }
+                button.addEventListener("click", selectAnswer);
+            });
+        }
+        function resetState(){
+
+            nextButton.style.display = "none";
+            while(answerButtons.firstChild){
+                answerButtons.removeChild(answerButtons.firstChild)
+            }
+        }
+        function selectAnswer(e){
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct == "true";
+            if(isCorrect){
+                selectedBtn.classList.add("correct");
+                score++;
+            }else{
+                selectedBtn.classList.add("incorrect");
+            }
+            Array.from(answerButtons.children).forEach(button => {
+                if(button.dataset.correct == "true"){
+                    button.classList.add("correct");
+                }
+                button.disabled = true;
+            })
+            nextButton.style.display = "block";
+        } 
+        function showScore(){
+            resetState();
+            questionElement.innerHTML = `You scored ${score} out of ${ques.length} !`;
+            nextButton.innerHTML = "Play Again";
+            nextButton.style.display = "block";
+        }
+        function handleNextButton(){
+            currentQuestionIndex++;
+            if(currentQuestionIndex < ques.length){
+                showQuestions();
+            }else{
+                showScore();
+            }
+        }
+        nextButton.addEventListener("click", () => {
+            if(currentQuestionIndex < ques.length){
+                handleNextButton();
+            }else{
+                startQuiz();
+            }
+        })
+        startQuiz();
+        </script>
+    </body>
+</html>
